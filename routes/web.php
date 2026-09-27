@@ -20,12 +20,20 @@ use App\Http\Controllers\Admin\PrivacyPolicyController;
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\TermsAndConditionController;
 use App\Http\Controllers\Admin\TableBookingController as AdminTableBookingController;
+use App\Http\Controllers\Admin\BulkOrderLeadController;
 
+
+// Landing Pages
+Route::get('lp/bulk_order', [MainSiteController::class, 'bulkOrderLanding'])->name('lp.bulk_order');
+Route::post('lp/bulk_order/enquire', [MainSiteController::class, 'submitBulkOrderEnquiry'])->name('lp.bulk_order.enquire');
+Route::redirect('lp/bulkorders', '/bulkorders', 301);
+Route::get('bulkorders', [MainSiteController::class, 'bulkOrdersLanding'])->name('bulkorders');
+Route::post('bulkorders/enquire', [MainSiteController::class, 'submitBulkOrderEnquiry'])->name('bulkorders.enquire');
 
 // Route::get('/home', [MainSiteController::class, 'home'])->name('home');
 Route::get('/', [MainSiteController::class, 'index'])->name('home');
 Route::view('/1', 'main-site.home_1')->name('home.1');
-Route::post('/lead', [LeadController::class, 'store'])->name('lead.store');
+Route::post('/lead', [MainSiteController::class, 'store'])->name('lead.store');
 
 
 Route::post('table-booking/', [TableBookingController::class, 'bookTable'])->name('table.booking');
@@ -131,6 +139,13 @@ Route::prefix('admin')->middleware(RedirectIfNotAdmin::class)->group(function ()
     Route::post('table-bookings/store', [AdminTableBookingController::class, 'store'])->name('admin.table-bookings.store');
     Route::put('table-bookings/{id}', [AdminTableBookingController::class, 'update'])->name('admin.table-bookings.update');
     Route::delete('table-bookings/{id}', [AdminTableBookingController::class, 'destroy'])->name('admin.table-bookings.destroy');
+
+    // Admin Bulk Order Leads
+    Route::get('bulk-orders', [BulkOrderLeadController::class, 'index'])->name('admin.bulk-orders.index');
+    Route::get('bulk-orders/{id}', [BulkOrderLeadController::class, 'show'])->name('admin.bulk-orders.show');
+    Route::put('bulk-orders/{id}/status', [BulkOrderLeadController::class, 'updateStatus'])->name('admin.bulk-orders.status');
+    Route::post('bulk-orders/{id}/resend-mail', [BulkOrderLeadController::class, 'resendMail'])->name('admin.bulk-orders.resend-mail');
+    Route::delete('bulk-orders/{id}', [BulkOrderLeadController::class, 'destroy'])->name('admin.bulk-orders.destroy');
    
 
     // Routes with CheckRole is Global Admin middleware

@@ -1,14 +1,15 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            @php $currentUser = $loggedInUser ?? auth()->user(); @endphp
             <ul class="nav">
               <li class="nav-item">
                 <div class="d-flex sidebar-profile">
                   <div class="sidebar-profile-image">
-                    <img src=" {{ $loggedInUser && $loggedInUser->profile_picture ? drive_url('profile-picture/' . $loggedInUser->profile_picture) : asset('assets/images/user-icon.png') }}" alt="image">
+                    <img src=" {{ $currentUser && $currentUser->profile_picture ? drive_url('profile-picture/' . $currentUser->profile_picture) : asset('assets/images/user-icon.png') }}" alt="image">
                     <span class="sidebar-status-indicator"></span>
                   </div>
                   <div class="sidebar-profile-name">
                     <p class="sidebar-name">
-                      {{ $loggedInUser->first_name }}
+                      {{ $currentUser ? $currentUser->first_name : 'Admin' }}
                     </p>
                     <p class="sidebar-designation">
                       Welcome
@@ -47,6 +48,16 @@
               <i class="fa fa-folder-open menu-icon"></i>
               <span class="menu-title">Manage Bookings</span>
           </a>
+        </li>
+        <li class="nav-item {{ Request::is('admin/bulk-orders*') ? 'active-nav' : '' }}">
+          <a class="nav-link" href="{{ route('admin.bulk-orders.index') }}">
+              <i class="fa fa-boxes menu-icon"></i>
+              <span class="menu-title">Bulk Order Leads</span>
+              @php $pendingLeadCount = \App\Models\BulkOrderLead::where('status', 'pending')->count(); @endphp
+              @if($pendingLeadCount > 0)
+              <span class="badge badge-warning text-dark ml-auto" style="font-size:10px; font-weight:800; border-radius:10px;">{{ $pendingLeadCount }}</span>
+              @endif
+          </a>
         </li>        
         <li class="nav-item {{ Request::is('admin/blog*') ? 'active-nav' : '' }}">
             <a class="nav-link" href="{{ route('admin.blog.index') }}">
@@ -57,7 +68,7 @@
         
 
 
-        @if ($loggedInUser->role == "global_admin")
+        @if (($currentUser->role ?? '') == "global_admin")
 
         <li class="nav-item {{ request()->route()->named('admin.users.index') ? 'active-nav' : '' }}">
           <a class="nav-link" href="{{ route('admin.users.index') }}">

@@ -13,7 +13,7 @@
   <!-- SITE TITLE -->
   <title>{{ config('site.name') }} - @yield('title')</title>
   <!-- Favicon Icon -->
-   <link rel="icon" type="image/x-icon" href="{{ url('public/storage/images/favicon.ico') }}?v=2">
+   <link rel="icon"  href="https://lh3.googleusercontent.com/d/1jICugAmB2VA6QBSRap-3rU5k0nKRrakE" type="image/x-icon"/>
   <title>Veg Mini Burgers: Order Online, Track, Shipping &amp; WhatsApp Support</title>
   <link rel="stylesheet" href="{{ asset('assets/mobirise/startm5/web/assets/mobirise-icons2/mobirise2.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/mobirise/startm5/parallax/jarallax.css') }}">
@@ -173,6 +173,12 @@
       --display7-font: 'Golos Text', sans-serif;
     }
   </style>
+  @PwaHead
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ByteMiniz">
+  <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('logo.png') }}">
   @stack('styles')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -1842,7 +1848,108 @@
 
   @yield('content')
 
-  @include('partials.logout')
+  @unless(Request::is('lp*') || Request::is('bulkorders*'))
+  <!-- FLOATING CUSTOMIZE CUP PREVIEW WIDGET FOR ALL NON-LP PAGES -->
+  <a href="{{ route('bulkorders') }}" class="lp-float-customize" title="Bulk Order Now">
+      <div class="lp-float-cup-preview">
+          <img src="https://lh3.googleusercontent.com/d/1SI4pEMz76SGUNQAxohmHaSbo2msk7moZ" alt="Byte Miniz Cup" class="lp-float-cup-img">
+      </div>
+      <div class="lp-float-btn">
+          Bulk Order Now
+      </div>
+  </a>
+  <style>
+  /* Floating Customize Button CSS for Non-LP Pages */
+  .lp-float-customize {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      z-index: 9998;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-decoration: none !important;
+  }
+  .lp-float-customize:hover {
+      transform: translateY(-50%) scale(1.05);
+      text-decoration: none !important;
+  }
+  .lp-float-cup-preview {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      filter: drop-shadow(0 10px 28px rgba(251,97,7,0.45));
+      transition: transform 0.3s ease;
+  }
+  .lp-float-customize:hover .lp-float-cup-preview {
+      transform: rotate(-2deg) scale(1.02);
+  }
+  .lp-float-cup-img {
+      height: 250px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      animation: lp-cup-vibrate 1.2s ease-in-out infinite;
+      transform-origin: center center;
+  }
+  .lp-float-btn {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.6rem 1.25rem;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #fdca00, #FB6107);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35), 0 0 16px rgba(251,97,7,0.55);
+      transition: all 0.3s ease;
+      text-decoration: none !important;
+      border: 2px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(4px);
+      animation: lp-pulse 2s infinite;
+      white-space: nowrap;
+      z-index: 3;
+  }
+  .lp-float-btn:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.45), 0 0 25px rgba(251,97,7,0.75);
+      color: #ffffff;
+  }
+  @keyframes lp-pulse {
+      0%, 100% { box-shadow: 0 6px 20px rgba(0,0,0,0.35), 0 0 16px rgba(251,97,7,0.55); }
+      50% { box-shadow: 0 8px 28px rgba(0,0,0,0.45), 0 0 26px rgba(251,97,7,0.8), 0 0 0 6px rgba(251,97,7,0.15); }
+  }
+  @keyframes lp-cup-vibrate {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      10% { transform: translate(-3px, 2px) rotate(-1.5deg); }
+      20% { transform: translate(3px, -2px) rotate(1.5deg); }
+      30% { transform: translate(-3px, -1px) rotate(-1deg); }
+      40% { transform: translate(3px, 1px) rotate(1deg); }
+      50% { transform: translate(-2px, 2px) rotate(-0.8deg); }
+      60% { transform: translate(2px, -1px) rotate(0.8deg); }
+      70% { transform: translate(-1px, 1px) rotate(-0.4deg); }
+      80% { transform: translate(1px, -1px) rotate(0.4deg); }
+      90%, 100% { transform: translate(0, 0) rotate(0deg); }
+  }
+  @media (max-width: 768px) {
+      .lp-float-cup-img { height: 170px; }
+      .lp-float-btn { font-size: 0.72rem; padding: 0.45rem 0.9rem; bottom: 6px; }
+  }
+  </style>
+  @endunless
 
   @include('partials.footer')
 
@@ -1854,6 +1961,134 @@
   {!! $liveChatScript->script_code !!}
   @endif
 
+
+  <script>
+    // Cookie Utility Helpers
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + encodeURIComponent(value || "") + expires + "; path=/; SameSite=Lax";
+    }
+
+    function getCookie(name) {
+      let nameEQ = name + "=";
+      let ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length,c.length));
+      }
+      return null;
+    }
+
+    // Detect Device & OS and store in Cookie
+    function detectDeviceOS() {
+      const ua = window.navigator.userAgent.toLowerCase();
+      let os = 'other';
+      if (/iphone|ipad|ipod/.test(ua) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /macintosh/.test(ua))) {
+        os = 'ios';
+      } else if (/android/.test(ua)) {
+        os = 'android';
+      } else if (/windows/.test(ua)) {
+        os = 'windows';
+      } else if (/macintosh|mac os x/.test(ua)) {
+        os = 'mac';
+      }
+      setCookie('pwa_device_os', os, 30);
+      return os;
+    }
+
+    function isStandalone() {
+      return window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+    }
+
+    let deferredPrompt;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const deviceOS = detectDeviceOS();
+
+      if (isStandalone()) {
+        setCookie('pwa_installed', 'true', 30);
+        document.querySelectorAll('#pwa-install-btn, #lp-pwa-install-btn').forEach(btn => {
+          btn.style.display = 'none';
+        });
+      } else {
+        document.querySelectorAll('#pwa-install-btn, #lp-pwa-install-btn').forEach(btn => {
+          btn.style.display = 'inline-flex';
+        });
+      }
+    });
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setCookie('pwa_prompt_ready', 'true', 7);
+      if (!isStandalone()) {
+        document.querySelectorAll('#pwa-install-btn, #lp-pwa-install-btn').forEach(btn => {
+          btn.style.display = 'inline-flex';
+        });
+      }
+    });
+
+    // Direct 1-Click Install Trigger with Smart Fallbacks
+    function pwaInstallPrompt(event) {
+      if (event) event.preventDefault();
+
+      const deviceOS = detectDeviceOS();
+      setCookie('pwa_last_prompt_click', new Date().toISOString(), 30);
+
+      // If app is already installed/running in standalone mode
+      if (isStandalone()) {
+        alert("ByteMiniz App is already installed on your device!");
+        return;
+      }
+
+      // 1. Try Native PWA Deferred Prompt (Chrome / Edge / Android)
+      if (deferredPrompt && typeof deferredPrompt.prompt === 'function') {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          setCookie('pwa_prompt_outcome', choiceResult.outcome, 30);
+          if (choiceResult.outcome === 'accepted') {
+            setCookie('pwa_installed', 'true', 30);
+            document.querySelectorAll('#pwa-install-btn, #lp-pwa-install-btn').forEach(btn => {
+              btn.style.display = 'none';
+            });
+          }
+          deferredPrompt = null;
+        });
+        return;
+      }
+
+      // 2. Try Package Install Button
+      const packageBtn = document.getElementById("install-button");
+      if (packageBtn) {
+        packageBtn.click();
+      }
+
+      // 3. Fallback when browser has not fired beforeinstallprompt
+      if (deviceOS === 'ios') {
+        alert("To install ByteMiniz on iPhone/iPad:\n\n1. Tap the Share button at the bottom of Safari.\n2. Tap 'Add to Home Screen'.");
+      } else if (deviceOS === 'android') {
+        alert("To install ByteMiniz on Android:\n\n1. Tap the 3 dots menu (⋮) in Chrome.\n2. Select 'Install app' or 'Add to Home screen'.");
+      } else {
+        alert("To install ByteMiniz App:\n\nClick the Install icon in your browser address bar or use Chrome menu (⋮) -> 'Install ByteMiniz'.");
+      }
+    }
+
+    window.addEventListener('appinstalled', () => {
+      setCookie('pwa_installed', 'true', 90);
+      document.querySelectorAll('#pwa-install-btn, #lp-pwa-install-btn').forEach(btn => {
+        btn.style.display = 'none';
+      });
+      deferredPrompt = null;
+    });
+  </script>
+
+  @RegisterServiceWorkerScript
 
 </body>
 

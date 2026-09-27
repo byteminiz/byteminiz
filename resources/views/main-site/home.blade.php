@@ -165,15 +165,10 @@
     <section class="header18 cid-uRmPpfUGaC mbr-fullscreen video-hero-section" id="hero-15-uRmPpfUGaC">
 
         <div class="mbr-overlay" style="opacity: 0.9; background-color: rgb(0, 0, 0); position:fixed; left:0; top:0; width:100vw; height:100vh; z-index:0;">
-            <!--<video class="bg-video" autoplay loop muted playsinline poster="" style="object-fit:cover; width:100vw; height:100vh; position:fixed; left:0; top:0; z-index:-1;">-->
-            <!--    <source src="{{ asset('storage/videos/banner.mp4') }}" type="video/mp4">-->
-            <!--    Your browser does not support the video tag.-->
-            <!--</video>-->
             <video class="bg-video" autoplay loop muted playsinline poster="" style="object-fit:cover; width:100vw; height:100vh; position:fixed; left:0; top:0; z-index:-1;">
-    <source src="{{ url('public/storage/videos/banner.mp4') }}" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-
+                <source src="{{ asset('storage/videos/banner.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
         <div class="container-fluid hero-content" style="position:relative; z-index:1; min-height:100vh; display:flex; align-items:end;">
             <div class="row w-100">

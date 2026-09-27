@@ -1,0 +1,31 @@
+{
+    "name": "ByteMiniz - Veg Mini Burgers",
+    "short_name": "ByteMiniz",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
+    "background_color": "#FEFCEA",
+    "theme_color": "#FB6107",
+    "display": "standalone",
+    "orientation": "any",
+    "description": "Order delicious veg mini burgers online from ByteMiniz. Fresh, flavourful, and made to order!",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ]
+}

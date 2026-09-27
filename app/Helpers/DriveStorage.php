@@ -7,6 +7,7 @@ class DriveStorage
     public static array $fileMap = [
         // images
         'byte_miniz.png' => '1XpkxnUu1gtizMkpd086kB6CO5CjiRzc0',
+        'byteminiz-cup-hero.png' => '1SI4pEMz76SGUNQAxohmHaSbo2msk7moZ',
         'byte.jpg' => '1BCDiCFnQ5657E9Cy-Yhnf70G9s04UrkG',
         'byteminiz_transperent_bg.png' => '1jICugAmB2VA6QBSRap-3rU5k0nKRrakE',
         'cheese_corn.jpg' => '1XHYOS7FjRRO1u9qtuVKNohIo0-cpLoYn',
@@ -79,6 +80,7 @@ class DriveStorage
         'TUPdbVPMhvTdbGhjyhl6tv1aVvIlxzLl5C58iI6r.png' => '1VuyXtmgSzfIyDKfC-o2XkZ0tQLlpNoIl',
 
         // videos
+        'bulk_order_bg.mp4' => '1DpXKIjWDwhRvz3iwfjOXGzeBeY7Rlxpv',
         'banner.mp4' => '17YKjdBRCnEZTnD1wgpb_eZPfSMs9jyYN',
     ];
 

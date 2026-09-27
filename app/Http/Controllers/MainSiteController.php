@@ -61,6 +61,21 @@ class MainSiteController extends Controller
         return view('main-site.index', compact('menus', 'blogs', 'testimonies'));
     }
 
+
+    public function bulkOrderLanding()
+    {
+        $menus = Menu::all();
+        $googleMapsApiKey = config('services.google_maps.api_key') ?? env('GOOGLE_MAPS_API_KEY');
+        return view('main-site.bulk-order', compact('menus', 'googleMapsApiKey'));
+    }
+
+    public function bulkOrdersLanding()
+    {
+        $menus = Menu::all();
+        $googleMapsApiKey = config('services.google_maps.api_key') ?? env('GOOGLE_MAPS_API_KEY');
+        return view('main-site.bulkorders', compact('menus', 'googleMapsApiKey'));
+    }
+
     public function about()
     {
         return view('main-site.about');
@@ -263,5 +278,113 @@ class MainSiteController extends Controller
         Lead::create($validated);
 
         return response()->json(['success' => true, 'message' => 'Lead saved successfully.']);
+    }
+
+    public function submitBulkOrderEnquiry(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:30',
+            'email' => 'nullable|email|max:255',
+            'event_date' => 'required|date',
+            'event_type' => 'required|string|max:100',
+            'location' => 'required|string|max:500',
+            'latitude' => 'nullable',
+            'longitude' => 'nullable',
+            'formatted_address' => 'nullable|string|max:500',
+            'order_items' => 'nullable',
+            'instructions' => 'nullable|string|max:1000',
+            'lead_source' => 'nullable|string|max:100',
+            'page_source' => 'nullable|string|max:255',
+        ]);
+
+        $leadSource = $request->input('lead_source') ?? (str_contains($request->header('referer', ''), 'bulk_order') ? 'Ads Lead' : 'Organic Lead');
+        $pageSource = $request->input('page_source') ?? parse_url($request->header('referer', ''), PHP_URL_PATH);
+        $validated['lead_source'] = $leadSource;
+        $validated['page_source'] = $pageSource;
+
+        $items = [];
+        $totalItemsCount = 0;
+        $estimatedTotal = 0;
+
+        if (!empty($request->order_items)) {
+            if (is_array($request->order_items)) {
+                $items = $request->order_items;
+            } else {
+                $decoded = json_decode($request->order_items, true);
+                if (is_array($decoded)) {
+                    $items = $decoded;
+                }
+            }
+        }
+        $validated['items'] = $items;
+
+        foreach ($items as $item) {
+            $qty = intval($item['qty'] ?? 1);
+            $price = floatval($item['price'] ?? 0);
+            $totalItemsCount += $qty;
+            $estimatedTotal += ($qty * $price);
+        }
+
+        $adminEmail = 'byteminiz@gmail.com';
+        $adminSent = false;
+        $adminError = null;
+        $customerSent = false;
+        $customerError = null;
+
+        // 1. Send Email to Admin (byteminiz@gmail.com)
+        try {
+            \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\BulkOrderAdminNotification($validated));
+            $adminSent = true;
+        } catch (\Exception $e) {
+            $adminError = $e->getMessage();
+            \Illuminate\Support\Facades\Log::error('Failed to send bulk order admin email: ' . $adminError);
+        }
+
+        // 2. Send Email to Customer if email provided
+        if (!empty($validated['email'])) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($validated['email'])->send(new \App\Mail\BulkOrderCustomerConfirmation($validated));
+                $customerSent = true;
+            } catch (\Exception $e) {
+                $customerError = $e->getMessage();
+                \Illuminate\Support\Facades\Log::error('Failed to send bulk order customer email: ' . $customerError);
+            }
+        }
+
+        // 3. Save Lead in Database with Full Details & Mail Statuses
+        try {
+            \App\Models\BulkOrderLead::create([
+                'name' => $validated['name'],
+                'phone' => $validated['phone'],
+                'email' => $validated['email'] ?? null,
+                'event_date' => $validated['event_date'],
+                'event_type' => $validated['event_type'],
+                'location' => $validated['location'],
+                'latitude' => $validated['latitude'] ?? null,
+                'longitude' => $validated['longitude'] ?? null,
+                'formatted_address' => $validated['formatted_address'] ?? null,
+                'order_items' => json_encode($items),
+                'total_items_count' => $totalItemsCount,
+                'estimated_total' => $estimatedTotal,
+                'instructions' => $validated['instructions'] ?? null,
+                'admin_mail_sent' => $adminSent,
+                'admin_mail_error' => $adminError,
+                'customer_mail_sent' => $customerSent,
+                'customer_mail_error' => $customerError,
+                'status' => 'pending',
+                'lead_source' => $leadSource,
+                'page_source' => $pageSource,
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to save bulk order lead to database: ' . $e->getMessage());
+        }
+
+        return response()->json([
+            'success' => true,
+            'admin_sent' => $adminSent,
+            'customer_sent' => $customerSent,
+            'message' => 'Bulk order enquiry submitted! An email notification has been triggered for both you and our catering team.',
+        ]);
     }
 }

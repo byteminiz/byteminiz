@@ -8836,17 +8836,5 @@ body.switch-open {
 		-webkit-transform: translateX(-270px);
 		transform: translateX(-270px);
 	}
-.display-h1 {
-    font-size: 5rem !important;
-    font-weight: 300;
-    line-height: 1.2
-}
-.display-2{
-    font-size: 2.5rem !important;
-    font-weight: 300;
-    line-height: 1.2
-}
-}
 
-
-
+}

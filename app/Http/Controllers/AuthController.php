@@ -26,11 +26,15 @@ class AuthController extends Controller
      public function login(Request $request)
      {
          $request->validate([
-             'email' => 'required|email',
+             'email' => 'required|string',
              'password' => 'required|string',
          ]);
      
-         $user = user::where('email', $request->email)->first();
+         $loginInput = trim($request->email);
+         $user = User::where('email', $loginInput)
+                     ->orWhere('first_name', $loginInput)
+                     ->orWhere('email', $loginInput . '@gmail.com')
+                     ->first();
      
          if ($user && Hash::check($request->password, $user->password)) {
              if ($user->status == 1) {
@@ -48,7 +52,7 @@ class AuthController extends Controller
                  }
              }
          } else {
-             return back()->withErrors(['email' => 'Invalid email or password.']);
+             return back()->withErrors(['email' => 'Invalid email/username or password.']);
          }
      }
      

@@ -724,9 +724,9 @@
         
     </div>
     <ul class="navbar-nav attr-nav align-items-center">
-        <li><a class="nav-link {{ Request::routeIs('cart') ? 'active' : '' }}" href="{{ route('customer.cart') }}" ><i class="linearicons-cart"></i><span class="cart_count" id="cart_count">{{ $customer_total_cart_items }}</span></a></li>
+        <li><a class="nav-link {{ Request::routeIs('cart') ? 'active' : '' }}" href="{{ route('customer.cart') }}" ><i class="linearicons-cart"></i><span class="cart_count" id="cart_count">{{ $customer_total_cart_items ?? 0 }}</span></a></li>
     </ul>
-    @if($firstRestaurantPhoneNumber)  
+    @if(!empty($firstRestaurantPhoneNumber))  
     <div class="header_btn d-sm-block d-none">
         <a href="tel:{{ $firstRestaurantPhoneNumber->phone_number }}" class="btn btn-default rounded-0 ml-2 btn-sm"><i class="fa fa-phone"></i> CALL US</a>
     </div>  
@@ -777,6 +777,10 @@
                     @endif
                 </ul>
                 <div class="navbar-buttons mbr-section-btn">
+                    <a class="nav-link" href="#" id="pwa-install-btn" style="display:inline-flex; align-items:center; cursor:pointer;" onclick="pwaInstallPrompt(event)" title="Install ByteMiniz App">
+                        <i class="fa fa-download" style="font-size:1.3rem;"></i>
+                        <span style="font-size:0.85rem; font-weight:600; margin-left:4px;">Install App</span>
+                    </a>
                     <a class="nav-link {{ Request::routeIs('cart') ? 'active' : '' }}" href="{{ route('customer.cart') }}"><i class="linearicons-cart"></i><span class="cart_count" id="cart_count">{{ $customer_total_cart_items }}</span></a>
 
                     <!-- <a class="btn btn-primary display-4" href="https://byteminiz.com">Chat Now</a> -->
