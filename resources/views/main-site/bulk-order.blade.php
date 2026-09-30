@@ -1,6 +1,12 @@
 @extends('layouts.main-site')
 
 @push('styles')
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="/assets/css/animate.css" as="style">
+<link rel="preload" href="/assets/bootstrap/css/bootstrap.min.css" as="style">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style">
+
 <link rel="stylesheet" href="/assets/css/animate.css">
 <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -1104,7 +1110,7 @@
 <div class="lp-topbar">
     <div class="container">
         <div class="lp-logo">
-            <img src="https://lh3.googleusercontent.com/d/1jICugAmB2VA6QBSRap-3rU5k0nKRrakE" alt="ByteMiniz Logo">
+            <img src="/logo.png" alt="ByteMiniz Logo" width="160" height="192" fetchpriority="high">
         </div>
         <div style="display:flex; align-items:center; gap:0.75rem;">
             <a href="#" id="lp-pwa-install-btn" class="lp-cta-btn" style="display:none; background:linear-gradient(135deg, #1a1a1a, #333); color:#fdca00; align-items:center; gap:0.4rem;" onclick="pwaInstallPrompt(event)">
@@ -1310,14 +1316,14 @@
         <div class="row g-4 justify-content-center">
             <div class="col-md-5 col-lg-4 lp-animate">
                 <div class="lp-delivery-card">
-                    <img src="{{ asset('assets/images/porter.svg') }}" alt="Porter" class="lp-delivery-logo">
+                    <img src="{{ asset('assets/images/porter.svg') }}" alt="Porter" class="lp-delivery-logo" width="120" height="60" loading="lazy">
                     <h4>Porter</h4>
                     <p>Fast & reliable intra-city delivery for large bulk orders with dedicated vehicles.</p>
                 </div>
             </div>
             <div class="col-md-5 col-lg-4 lp-animate">
                 <div class="lp-delivery-card">
-                    <img src="{{ asset('assets/images/rapido.svg') }}" alt="Rapido" class="lp-delivery-logo">
+                    <img src="{{ asset('assets/images/rapido.svg') }}" alt="Rapido" class="lp-delivery-logo" width="120" height="60" loading="lazy">
                     <h4>Rapido</h4>
                     <p>Quick two-wheeler deliveries perfect for smaller bulk packages across the city.</p>
                 </div>
@@ -1473,7 +1479,7 @@
 <!-- FLOATING CUSTOMIZE BUTTON -->
 <a href="#bulk-order-menu" class="lp-float-customize" id="floatCustomize" onclick="smoothScrollTo('bulk-order-menu'); return false;" title="Customize your order">
     <div class="lp-float-cup-preview">
-        <img src="https://lh3.googleusercontent.com/d/1SI4pEMz76SGUNQAxohmHaSbo2msk7moZ" alt="Byte Miniz Cup" class="lp-float-cup-img">
+        <img src="/images/cup.webp" alt="Byte Miniz Cup" class="lp-float-cup-img" width="380" height="520" fetchpriority="high">
     </div>
     <div class="lp-float-btn">
         Customize your order
@@ -1548,12 +1554,12 @@
 @endsection
 
 @push('scripts')
-<script src="/assets/js/jquery-1.12.4.min.js"></script>
-<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="/assets/js/jquery-1.12.4.min.js"></script>
+<script defer src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 @if(!empty($googleMapsApiKey) && $googleMapsApiKey !== 'your_google_maps_api_key')
-<script src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsApiKey }}&libraries=places"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsApiKey }}&libraries=places"></script>
 @endif
 
 <script>

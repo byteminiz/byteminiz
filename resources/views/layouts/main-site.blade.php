@@ -7,13 +7,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="generator" content="ByteMiniz">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <link rel="shortcut icon" href="https://lh3.googleusercontent.com/d/1jICugAmB2VA6QBSRap-3rU5k0nKRrakE" type="image/x-icon">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="shortcut icon" href="/logo.png" type="image/x-icon">
   <meta name="description" content="Veg Mini Burgers e-store offers a seamless online ordering experience. Enjoy mobile-friendly design, WhatsApp integration for queries and order confirmation. Track orders easily. Explore shipping information and contact details. AI website builder for burger delivery">
 
   <!-- SITE TITLE -->
   <title>{{ config('site.name') }} - @yield('title')</title>
   <!-- Favicon Icon -->
-   <link rel="icon"  href="https://lh3.googleusercontent.com/d/1jICugAmB2VA6QBSRap-3rU5k0nKRrakE" type="image/x-icon"/>
+   <link rel="icon"  href="/logo.png" type="image/x-icon"/>
   <title>Veg Mini Burgers: Order Online, Track, Shipping &amp; WhatsApp Support</title>
   <link rel="stylesheet" href="{{ asset('assets/mobirise/startm5/web/assets/mobirise-icons2/mobirise2.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/mobirise/startm5/parallax/jarallax.css') }}">
@@ -60,16 +63,16 @@
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;700&display=swap">
   </noscript>
-  <script src="{{ asset('assets/mobirise/startm5/parallax/jarallax.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/dropdown/js/navbar-dropdown.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/scrollgallery/scroll-gallery.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/mbr-switch-arrow/mbr-switch-arrow.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/smoothscroll/smoothscroll.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/ytplayer/index.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/theme/js/script.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/startm5/formoid/formoid.min.js') }}"></script>
-  <script src="{{ asset('assets/mobirise/preview.js') }}"></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/parallax/jarallax.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/bootstrap/js/bootstrap.bundle.min.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/dropdown/js/navbar-dropdown.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/scrollgallery/scroll-gallery.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/mbr-switch-arrow/mbr-switch-arrow.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/smoothscroll/smoothscroll.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/ytplayer/index.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/theme/js/script.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/startm5/formoid/formoid.min.js') }}"></script></script>
+  <script defer src="{{ asset('assets/mobirise/preview.js') }}"></script></script>
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/livecanvas-team/ninjabootstrap/dist/css/bootstrap.min.css" media="all">
 
